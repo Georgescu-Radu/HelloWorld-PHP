@@ -8,13 +8,14 @@ $config = include('config.php');
 session_start();
 
 $dataService = DataService::Configure(array(
-    'auth_mode' => 'oauth2',
-    'ClientID' => $config['client_id'],
-    'ClientSecret' =>  $config['client_secret'],
-    'RedirectURI' => $config['oauth_redirect_uri'],
-    'scope' => $config['oauth_scope'],
-    'baseUrl' => "development"
+	'auth_mode' => 'oauth2',
+	'ClientID' => $config['client_id'],
+	'ClientSecret' =>  $config['client_secret'],
+	'RedirectURI' => $config['oauth_redirect_uri'],
+	'scope' => $config['oauth_scope'],
+	'baseUrl' => "development"
 ));
+
 
 $OAuth2LoginHelper = $dataService->getOAuth2LoginHelper();
 $authUrl = $OAuth2LoginHelper->getAuthorizationCodeURL();
@@ -26,16 +27,16 @@ $_SESSION['authUrl'] = $authUrl;
 //set the access token using the auth object
 if (isset($_SESSION['sessionAccessToken'])) {
 
-    $accessToken = $_SESSION['sessionAccessToken'];
-    $accessTokenJson = array('token_type' => 'bearer',
-        'access_token' => $accessToken->getAccessToken(),
-        'refresh_token' => $accessToken->getRefreshToken(),
-        'x_refresh_token_expires_in' => $accessToken->getRefreshTokenExpiresAt(),
-        'expires_in' => $accessToken->getAccessTokenExpiresAt()
-    );
-    $dataService->updateOAuth2Token($accessToken);
-    $oauthLoginHelper = $dataService -> getOAuth2LoginHelper();
-    $CompanyInfo = $dataService->getCompanyInfo();
+	$accessToken = $_SESSION['sessionAccessToken'];
+	$accessTokenJson = array('token_type' => 'bearer',
+		'access_token' => $accessToken->getAccessToken(),
+		'refresh_token' => $accessToken->getRefreshToken(),
+		'x_refresh_token_expires_in' => $accessToken->getRefreshTokenExpiresAt(),
+		'expires_in' => $accessToken->getAccessTokenExpiresAt()
+	);
+	$dataService->updateOAuth2Token($accessToken);
+	$oauthLoginHelper = $dataService -> getOAuth2LoginHelper();
+	$CompanyInfo = $dataService->getCompanyInfo();
 }
 
 ?>
@@ -136,8 +137,8 @@ if (isset($_SESSION['sessionAccessToken'])) {
     <p>If there is no access token or the access token is invalid, click the <b>Connect to QuickBooks</b> button below.</p>
     <pre id="accessToken">
         <style="background-color:#efefef;overflow-x:scroll"><?php
-    $displayString = isset($accessTokenJson) ? $accessTokenJson : "No Access Token Generated Yet";
-    echo json_encode($displayString, JSON_PRETTY_PRINT); ?>
+		$displayString = isset($accessTokenJson) ? $accessTokenJson : "No Access Token Generated Yet";
+		echo json_encode($displayString, JSON_PRETTY_PRINT); ?>
     </pre>
     <a class="imgLink" href="#" onclick="oauth.loginPopup()"><img src="views/C2QB_green_btn_lg_default.png" width="178" /></a>
     <hr />
